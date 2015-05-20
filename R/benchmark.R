@@ -23,12 +23,12 @@ getSlowestTests <- function(n = 5) {
   print(tail(res[order(res$real), "test"], n = n))
 }
 
-randomPatients <- function(n = 100, np=10)
+randomPatients <- function(n = 100, np = 10)
   randomOrderedPatients(n, np)
 
 randomOrderedPatients <- function(n = 100, np = 10) {
   x <- randomUnorderedPatients(n, np)
-  x[order(x$visitId), ]
+  x[order(x$visitId), ] %>% set_rownames(NULL)
 }
 
 randomUnorderedPatients <- function(n = 50000, np = 20) {
@@ -316,4 +316,29 @@ icd9Benchmark <- function() {
 
   microbenchmark::microbenchmark(times = 3, grepl(pattern = "[EeVv]", rpts))
 }
+
+#' @title Benchmark Charlson calcs
+#' @keywords internal
+benchCharlson <- function(max = 1e4) {
+
+  requireNamespace("microbenchmark")
+  sizes <- 10 ^ (1:7)
+
+  pts <- randomPatients(max) # seed is set within
+  message("Calculating Charlson scores")
+    mb_res <- microbenchmark::microbenchmark(
+      icd9Charlson(pts[1:1e0, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e1, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e2, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e3, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e4, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e5, ], return.df = FALSE),
+      icd9Charlson(pts[1:1e6, ], return.df = FALSE),
+      #icd9Charlson(pts[1:1e7, ], return.df = FALSE),
+      times = 5
+      )
+  mb_res
+}
+
+
 # EXCLUDE COVERAGE END

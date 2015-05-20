@@ -1,0 +1,22 @@
+---
+title: 'Benchmarking icd9: working with large numbers of ICD-9 codes and comorbidities in R'
+author: "Jack O. Wasey"
+date: '`r format(Sys.time(), "%Y-%m-%d")`'
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Benchmarking icd9}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```{r setup, echo = FALSE, cache = FALSE}
+do_slow = TRUE
+```
+
+# Charlson score
+```{r charlson}
+benchCharlson()
+```
