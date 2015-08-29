@@ -28,7 +28,7 @@ randomPatients <- function(n = 100, np = 10)
 
 randomOrderedPatients <- function(n = 100, np = 10) {
   x <- randomUnorderedPatients(n, np)
-  x[order(x$visitId), ] %>% set_rownames(NULL)
+  x[order(x$visitId), ] %>% magrittr::set_rownames(NULL)
 }
 
 randomUnorderedPatients <- function(n = 50000, np = 20) {
