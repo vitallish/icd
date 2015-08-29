@@ -16,7 +16,6 @@ vignette: >
 do_slow = TRUE
 ```
 
-# Charlson score
 ```{r charlson}
-benchCharlson()
+#icd9:::benchCharlson()
 ```
