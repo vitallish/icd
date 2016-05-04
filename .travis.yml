@@ -10,13 +10,13 @@ addons:
       r-cran-rodbc
 
 r:
-  - oldrel # when oldrel = 3.1, there are S3 method problems I can't debug
+# - oldrel
   - release
   - devel
 
-# compiler:
-#   - gcc
-#   - clang
+os:
+  - linux
+#  - osx
 
 matrix:
   allow_failures:
@@ -31,8 +31,8 @@ warnings_are_errors: true
 # seperate lines seems to mean the whole build is repeated each line.
 # As of 2013 at least, travis offers ~1.5 cores per process
 env:
-  - OMP_NUM_THREADS=1 CFLAGS="-O0 -Werror -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-variable" CXXFLAGS="-O0 -Werror -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-variable"
-  - OMP_NUM_THREADS=2 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native"
+  - OMP_NUM_THREADS=2 CFLAGS="-O0 -Werror -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-variable" CXXFLAGS="-O0 -Werror -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-variable"
+#  - OMP_NUM_THREADS=2 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native"
 
 before_script:
  - ls -R
