@@ -611,7 +611,6 @@ icd9_comorbid_hcc <- function(x,
   assert_string(visit_name)
   assert_string(icd_name)
 
-  icd_map <- icd::icd9_map_cc
   # Add column for year
   x$year <- as.numeric(format(x[[date_name]], "%Y"))
 
