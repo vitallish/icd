@@ -227,7 +227,7 @@ icd9_parse_cc <- function(save_data = FALSE) {
   icd9_map_cc <- apply(
     data.frame(paste("inst/data-raw/icd_hcc_rawdata/icd9/",
                      list.files("inst/data-raw/icd_hcc_rawdata/icd9/"), sep = "")),
-    1, FUN = read.fwf,
+    1, FUN = utils::read.fwf,
     widths = c(7, 4), header = FALSE, stringsAsFactors = FALSE)
 
   # Create a vector of year names based on the file names in the icd folders
@@ -300,7 +300,7 @@ icd10_parse_cc <- function(save_data = FALSE) {
   icd10_map_cc <- apply(
     data.frame(paste("inst/data-raw/icd_hcc_rawdata/icd10/",
                      list.files("inst/data-raw/icd_hcc_rawdata/icd10/"), sep = "")),
-    1, FUN = read.fwf,
+    1, FUN = utils::read.fwf,
     widths = c(7, 4), header = FALSE, stringsAsFactors = FALSE)
 
   # TODO: do use factors, as there is much duplication in "year" and "cc" which
