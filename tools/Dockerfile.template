@@ -21,7 +21,8 @@
 FROM DOCKER_IMAGE_FULL_NAME
 
 ## install some libraries and supporting binaries, some of which must come from unstable (sid), and not the testing repo which is the default in the r-devel base rocker image.
-RUN apt-get install -y -t unstable unixodbc-dev
+# RUN apt-get install -y -t unstable unixodbc-dev
+RUN apt-get install -y unixodbc-dev
 
 ADD install_r_packages.R /tmp
 ADD build_install_check_in_docker.sh /tmp
