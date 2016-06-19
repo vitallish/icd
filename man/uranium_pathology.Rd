@@ -4,9 +4,13 @@
 \name{uranium_pathology}
 \alias{uranium_pathology}
 \title{United States Transuranium & Uranium Registries}
+\format{An object of class \code{icd10} (inherits from \code{icd_long_data}, \code{data.frame}) with 2376 rows and 2 columns.}
 \source{
 \url{http://www.ustur.wsu.edu/database/}
   \url{http://www.ustur.wsu.edu/Case_Studies/Pathology/mdb/Pathology_Office2007.zip}
+}
+\usage{
+uranium_pathology
 }
 \description{
 an ICD-10 data set (not ICD-10-CM) with mortality from the United States

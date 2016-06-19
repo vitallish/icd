@@ -11,6 +11,9 @@
 \source{
 \url{http://www.cms.gov/Medicare/Coding/ICD9ProviderDiagnosticCodes/codes.html}
 }
+\usage{
+icd9cm_billable
+}
 \description{
 These are derived from the CMS published updates, with versions 23 to 32
 currently available going back to 2004/5. The source files back to version 27

@@ -14,6 +14,9 @@
 \source{
 \url{http://www.cms.gov/Medicare/Coding/ICD9ProviderDiagnosticCodes/codes.html}
 }
+\usage{
+icd9_chapters
+}
 \description{
 \code{icd9_chapters}, \code{icd9_chapters_sub} and \code{icd9_majors} contain
 mappings from the higher level descriptions of ICD-9 codes to the ranges of

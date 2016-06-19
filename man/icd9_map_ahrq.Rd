@@ -11,6 +11,9 @@
 \source{
 \url{http://www.hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp}
 }
+\usage{
+icd9_map_ahrq
+}
 \description{
 This mapping of comorbidities to ICD-9 codes is derived directly from SAS
 code provided by AHRQ, and translated into this R data structure. This is a

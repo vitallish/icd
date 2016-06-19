@@ -9,6 +9,9 @@
 \source{
 \url{http://www.cdc.gov/nchs/icd/icd10cm.htm}
 }
+\usage{
+icd10cm2016
+}
 \description{
 The public domain modified ICD-10 classification as published in the public
 domain by the US CDC. Currently this has a slightly different structure to

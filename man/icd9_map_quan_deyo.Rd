@@ -7,6 +7,9 @@
 \alias{quanDeyoComorbid}
 \title{Quan adaptation of Deyo/Charlson comorbidities}
 \format{list of character vectors, each named by co-morbidity}
+\usage{
+icd9_map_quan_deyo
+}
 \description{
 Derived automatically from the SAS code used in the original publication.
 According to the referenced study, this provides the best predictor of
