@@ -95,7 +95,6 @@ icd9PoaChoices <- icd_poa_choices
 #'              date = as.Date(c("2011-01-01", "2011-01-02", "2011-01-03",
 #'                "2011-01-04", "2011-01-04")))
 #'   pt_hccs <- icd_comorbid_hcc(pts, date_name = "date")
-
 #' @export
 icd_comorbid <- function(x, map, ...) {
   ver <- icd_guess_version.character(map[[1]])
@@ -601,7 +600,7 @@ icd9_comorbid_hcc <- function(x,
                               date_name = "date",
                               visit_name = NULL,
                               icd_name = NULL
-                              ) {
+) {
   assert_data_frame(x, min.cols = 3, col.names = "unique")
   assert(checkString(visit_name), checkNull(visit_name))
   assert(checkString(icd_name), checkNull(icd_name))
@@ -648,7 +647,7 @@ icd9_comorbid_hcc <- function(x,
   todrop <- lapply(1:length(todrop), function(x) {
     names(todrop[[x]]) <- c(visit_name, date_name, "cc")
     return(todrop[[x]])
-    }
+  }
   )
   todrop <- do.call(rbind, todrop)
 
@@ -671,9 +670,9 @@ icd9_comorbid_hcc <- function(x,
 #' @rdname icd_comorbid
 #' @export
 icd10_comorbid_hcc <- function(x,
-                              date_name = "date",
-                              visit_name = NULL,
-                              icd_name = NULL) {
+                               date_name = "date",
+                               visit_name = NULL,
+                               icd_name = NULL) {
   assert_data_frame(x, min.cols = 3, col.names = "unique")
   assert(checkString(visit_name), checkNull(visit_name))
   assert(checkString(icd_name), checkNull(icd_name))
@@ -720,7 +719,7 @@ icd10_comorbid_hcc <- function(x,
   todrop <- lapply(1:length(todrop), function(x) {
     names(todrop[[x]]) <- c(visit_name, date_name, "cc")
     return(todrop[[x]])
-    }
+  }
   )
   todrop <- do.call(rbind, todrop)
 

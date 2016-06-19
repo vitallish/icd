@@ -8,6 +8,9 @@
 \source{
 \url{http://healthvermont.gov/research/hospital-utilization/RECENT_PU_FILES.aspx}
 }
+\usage{
+vermont_dx
+}
 \description{
 Anonymous data from public Vermont source for 2013
 }

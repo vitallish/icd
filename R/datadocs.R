@@ -46,10 +46,9 @@
 #'
 #' @format list with chapter/sub-chapter or major names stored in list names,
 #'   each with two element named character vector with start and end codes.
-#' @name icd9_chapters
 #' @aliases icd9Chapters icd9ChaptersSub icd9ChaptersMajor icd9_sub_chapters
 #'   icd9_majors
-NULL
+"icd9_chapters"
 
 #' ICD-10 chapters
 #'
@@ -61,8 +60,7 @@ NULL
 #' @source http://apps.who.int/classifications/icd10/browse/2016/en
 #' @format list with chapter names stored in list names, each with two element
 #'   named character vector with start and end codes.
-#' @name icd10_chapters
-NULL
+"icd10_chapters"
 
 #' ICD-10 sub-chapters
 #'
@@ -75,8 +73,7 @@ NULL
 #' @source http://apps.who.int/classifications/icd10/browse/2016/en
 #' @format list with sub-chapter or major names stored in list names, each with
 #'   two element named character vector with start and end codes.
-#' @name icd10_sub_chapters
-NULL
+"icd10_sub_chapters"
 
 
 #' Latest ICD-9-CM diagnosis codes, in flat \code{data.frame} format
@@ -104,9 +101,8 @@ NULL
 #' \url{http://wonder.cdc.gov/wonder/sci_data/codes/icd9/type_txt/icdcm.asp}
 #' @source
 #' \url{http://wonder.cdc.gov/wonder/sci_data/codes/icd9/type_txt/icd9abb.asp}
-#' @name icd9cm_hierarchy
 #' @aliases icd9Hierarchy
-NULL
+"icd9cm_hierarchy"
 
 #' ICD-10-CM
 #'
@@ -118,13 +114,12 @@ NULL
 #'
 #' There are annual revisions to this data. Currently, the 2016 edition is
 #' included.
-#' @name icd10cm2016
 #' @source \url{http://www.cdc.gov/nchs/icd/icd10cm.htm}
 #' @docType data
 #' @keywords datasets
 #' @format data frame, with columns for code, leaf status (0 or 1), short and
 #'   long descriptions.
-NULL
+"icd10cm2016"
 
 #' AHRQ comorbidities
 #'
@@ -136,9 +131,8 @@ NULL
 #' @format list of character vectors
 #' @source
 #' \url{http://www.hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp}
-#' @name icd9_map_ahrq
 #' @aliases ahrqComorbid ahrq icd10_map_ahrq
-NULL
+"icd9_map_ahrq"
 
 #' Quan adaptation of Deyo/Charlson comorbidities
 #'
@@ -160,10 +154,8 @@ NULL
 #'   Care 43, no. 11 (November 1, 2005): 1130-39.
 #'   \url{http://www.ncbi.nlm.nih.gov/pubmed/16224307}
 #'   \url{http://web.archive.org/web/20110225042437/http://www.chaps.ucalgary.ca/sas}
-#'
-#' @name icd9_map_quan_deyo
 #' @aliases quanDeyoComorbid icd10_map_quan_deyo
-NULL
+"icd9_map_quan_deyo"
 
 #' Quan adaptation of Elixhauser comorbidities
 #'
@@ -178,11 +170,8 @@ NULL
 #'   Care 43, no. 11 (November 1, 2005): 1130-39.
 #'   \url{http://www.ncbi.nlm.nih.gov/pubmed/16224307}
 #'   \url{http://web.archive.org/web/20110225042437/http://www.chaps.ucalgary.ca/sas}
-#'
-#'
-#' @name icd9_map_quan_elix
 #' @aliases quanElixComorbid icd10_map_quan_elix
-NULL
+"icd9_map_quan_elix"
 
 #' Elixhauser comorbidities
 #'
@@ -203,34 +192,34 @@ NULL
 #'   Elixhauser, Anne, Claudia Steiner, D. Robert Harris, and Rosanna M. Coffey.
 #'   "Comorbidity Measures for Use with Administrative Data." Medical Care
 #'   January 1998 36, no. 1 (1998): 8-27.
-#' @name icd9_map_elix
 #' @aliases elixComorbid icd10_map_elix
-NULL
+"icd9_map_elix"
 
 #' Medicare Hierarchical Condition Categories
-#' 
-#' Medicare HCC model was developed to use current year diagnoses and demographics
-#' predict current year healthcare expenditure. This classification has been used
-#' for additional risk adjustment models. ICD codes are first assigned to numeric
-#' Condition Categories (CCs). A hierarchy rule is then applied so that each patient
-#' is coded for only the most severe of the Condition Categories in a group. For example,
-#' if a patient has metastatic lung cancer, they will only be assigned the CC
-#' for "Metastatic Cancer and Acute Leukemia", and will not be assigned the 
-#' CC for "Lung and other Severe Cancers". Once the hierarchy rules are applied, the codes
-#' are referred to as HCCs. This mapping can change over time. It remained the same from
-#' 2007-20
+#'
+#' Medicare HCC model was developed to use current year diagnoses and
+#' demographics predict current year healthcare expenditure. This classification
+#' has been used for additional risk adjustment models. ICD codes are first
+#' assigned to numeric Condition Categories (CCs). A hierarchy rule is then
+#' applied so that each patient is coded for only the most severe of the
+#' Condition Categories in a group. For example, if a patient has metastatic
+#' lung cancer, they will only be assigned the CC for "Metastatic Cancer and
+#' Acute Leukemia", and will not be assigned the CC for "Lung and other Severe
+#' Cancers". Once the hierarchy rules are applied, the codes are referred to as
+#' HCCs. This mapping can change over time. It remained the same from 2007-20
 #' @docType data
 #' @keywords datasets
-#' @format \code{dataframe} with 3 columns (\code{icd_code}, \code{cc}, and \code{year})
-#' @references Pope, Gregory C., et al. 
-#'   "Diagnostic cost group hierarchical condition category models for Medicare risk adjustment." 
-#'   Health Economics Research, Inc. Waltham, MA (2000).
+#' @format \code{dataframe} with 3 columns (\code{icd_code}, \code{cc}, and
+#'   \code{year})
+#' @references Pope, Gregory C., et al. "Diagnostic cost group hierarchical
+#'   condition category models for Medicare risk adjustment." Health Economics
+#'   Research, Inc. Waltham, MA (2000).
 #'   \url{https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Reports/Downloads/Pope_2000_2.pdf}
-#' 
+#'
 #'   Risk Adjustment, Centers for Medicare and Medicaid Services
 #'   \url{https://www.cms.gov/Medicare/Health-Plans/MedicareAdvtgSpecRateStats/Risk-Adjustors.html}
-#' @name icd9_map_hcc
-#' @aliases icd10_map_hcc
+#' @aliases icd10_map_cc
+"icd9_map_cc"
 
 #' Comorbidity names
 #'
@@ -251,7 +240,6 @@ NULL
 #'   'Hypertension, complicated' are labelled '6a' and '6b'. Diabetes, cancer,
 #'   and metastasis are counted independently, as in the original paper, giving
 #'   the original 30 groups. "01" to "30"
-#' @name icd_names_elix
 #' @aliases icd_names_elix_abbrev icd_names_elix_htn icd_names_elix_htn_abbrev
 #'   icd_names_quan_elix icd_names_quan_elix_abbrev icd_names_quan_elix_htn
 #'   icd_names_quan_elix_htn_abbrev icd_names_ahrq icd_names_ahrq_abbrev
@@ -264,7 +252,7 @@ NULL
 #'   charlsonComorbidNamesAbbrev
 #' @keywords datasets
 #' @docType data
-NULL
+"icd_names_elix"
 
 #' list of annual versions of billable leaf nodes of ICD-9-CM
 #'
@@ -285,9 +273,8 @@ NULL
 #' @source
 #' \url{http://www.cms.gov/Medicare/Coding/ICD9ProviderDiagnosticCodes/codes.html}
 #'
-#' @name icd9cm_billable
 #' @aliases icd9Billable
-NULL
+"icd9cm_billable"
 
 #' Hospital discharge data from Vermont
 #'
@@ -316,16 +303,14 @@ NULL
 #' @keywords datasets
 #' @author Vermont Division of Health Care Administration
 #' @docType data
-#' @name vermont_dx
-NULL
+"vermont_dx"
 
 #' United States Transuranium & Uranium Registries
 #'
 #' an ICD-10 data set (not ICD-10-CM) with mortality from the United States
 #' Transuranium & Uranium Registries, published in the public domain.
-#' @name uranium_pathology
 #' @source \url{http://www.ustur.wsu.edu/database/}
 #'   \url{http://www.ustur.wsu.edu/Case_Studies/Pathology/mdb/Pathology_Office2007.zip}
 #' @docType data
 #' @keywords datasets
-NULL
+"uranium_pathology"

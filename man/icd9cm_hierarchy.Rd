@@ -23,6 +23,9 @@ Rich text descriptions here:
 
 \url{http://wonder.cdc.gov/wonder/sci_data/codes/icd9/type_txt/icd9abb.asp}
 }
+\usage{
+icd9cm_hierarchy
+}
 \description{
 Short-form ICD-9 codes with short and long descriptions, and description of
 each hierarchy level containing each code.

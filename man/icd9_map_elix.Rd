@@ -7,6 +7,9 @@
 \alias{icd9_map_elix}
 \title{Elixhauser comorbidities}
 \format{list of character vectors, each named by co-morbidity}
+\usage{
+icd9_map_elix
+}
 \description{
 The original mapping of Elixhauser's ICD-9-CM to 30 comorbidities. According
 to Sharabiani, this mapping provides the best long-term mortality prediction.
