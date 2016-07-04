@@ -3,10 +3,13 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-ICD_HOME=$HOME/Documents/RProjects/icd
-cd $ICD_HOME
+# if the second argument is missing, default to my development directory
+ICD_HOME=${1:-$HOME/Documents/RProjects/icd}
+pushd "$ICD_HOME"
 R -d "valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -v" -e "library(devtools); library(testthat); test()"
-#R -d "valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -v" -e "library(devtools); library(testthat); check(cran = TRUE)"
 
 # other useful options: --instr-atstart=no
 # then 'callgrind_control -i' or prograammatically start instrumentation
+
+popd
+

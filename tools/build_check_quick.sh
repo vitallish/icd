@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
 
 # set environment here for slow and online tests
-OLDWD=`pwd`
-cd /tmp
+pushd "$(mktemp -d)"
 R CMD build --no-build-vignettes ~/icd
-ICD_SLOW_TESTS=FALSE R CMD check --no-build-vignettes `ls -t /tmp/icd*.tar.gz | head -1`
-cd $OLDWD
+ICD_SLOW_TESTS=FALSE R CMD check --no-build-vignettes "$(ls -t /tmp/icd*.tar.gz | head -1)"
+popd
