@@ -6,7 +6,7 @@ output: html_document
 vignette: >
   %\VignetteIndexEntry{Charlson and other scores from ICD-9 and ICD-10 codes}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 ---
 <!--
 Copyright (C) 2014 - 2016  Jack O. Wasey

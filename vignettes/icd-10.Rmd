@@ -6,7 +6,7 @@ output: html_document
 vignette: >
   %\VignetteIndexEntry{ICD-10 comorbidities}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 ---
 <!--
 Copyright (C) 2014 - 2016  Jack O. Wasey

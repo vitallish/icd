@@ -4,6 +4,7 @@
 \name{icd9_map_cc}
 \alias{icd10_map_cc}
 \alias{icd9_map_cc}
+\alias{icd_map_cc}
 \title{Medicare Hierarchical Condition Categories}
 \format{\code{dataframe} with 3 columns (\code{icd_code}, \code{cc}, and
   \code{year})}
@@ -14,7 +15,6 @@ icd9_map_cc
 Medicare HCC model was developed to use current year diagnoses and
 demographics predict current year healthcare expenditure. This classification
 has been used for additional risk adjustment models. ICD codes are first
-assigned to numeric Condition Categories (CCs). A hierarchy rule is then
 applied so that each patient is coded for only the most severe of the
 Condition Categories in a group. For example, if a patient has metastatic
 lung cancer, they will only be assigned the CC for "Metastatic Cancer and

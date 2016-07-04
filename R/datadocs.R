@@ -200,7 +200,6 @@
 #' Medicare HCC model was developed to use current year diagnoses and
 #' demographics predict current year healthcare expenditure. This classification
 #' has been used for additional risk adjustment models. ICD codes are first
-#' assigned to numeric Condition Categories (CCs). A hierarchy rule is then
 #' applied so that each patient is coded for only the most severe of the
 #' Condition Categories in a group. For example, if a patient has metastatic
 #' lung cancer, they will only be assigned the CC for "Metastatic Cancer and
@@ -218,8 +217,22 @@
 #'
 #'   Risk Adjustment, Centers for Medicare and Medicaid Services
 #'   \url{https://www.cms.gov/Medicare/Health-Plans/MedicareAdvtgSpecRateStats/Risk-Adjustors.html}
-#' @aliases icd10_map_cc
+#' @aliases icd_map_cc icd10_map_cc
 "icd9_map_cc"
+
+#' Names of hierarchical condition codes
+#'
+#' See \code{icd9_map_cc}
+#' @docType data
+#' @keywords datasets
+"icd_names_cc"
+
+#' Map of hierarchical condition codes
+#'
+#' See \code{icd9_map_cc}
+#' @docType data
+#' @keywords datasets
+"icd_map_cc_hcc"
 
 #' Comorbidity names
 #'
