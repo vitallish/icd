@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 ICD_HOME=${ICD_HOME:-"$HOME/Documents/RProjects/icd"}
-cd $ICD_HOME
+pushd "$ICD_HOME"
 
 TESTFILE=${1:-test-current-comorbid-calcs-icd10.R}
 RCODE=${RCODE:-"library(testthat); devtools::load_all(); message('Testing: $TESTFILE'); test_file('tests/testthat/$TESTFILE')"}
@@ -14,3 +14,5 @@ VALGRIND_CMD="valgrind --tool=callgrind --simulate-cache=yes --instr-atstart=$IN
 R --vanilla --slave -d "$VALGRIND_CMD" -e "$RCODE"
 
 # use 'callgrind_control -i' or prograammatically start instrumentation
+
+popd

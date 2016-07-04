@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# Copyright (C) 2014 - 2015  Jack O. Wasey
+# Copyright (C) 2014 - 2016  Jack O. Wasey
 #
 # This file is part of icd.
 #
@@ -21,20 +21,20 @@ IFS=$'\n\t'
 
 # This file should be run within the container. It is placed there by rocker-icd9.sh
 
-: ${R_PKG_NAME:=icd}
-: ${GIT_URL:=https://github.com}
-: ${GITHUB_USER:=jackwasey}
-: ${GITHUB_REPO:=icd}
-: ${GIT_BRANCH:=master}
-: ${R_CMD:=R}
+: "${R_PKG_NAME:=icd}"
+: "${GIT_URL:=https://github.com}"
+: "${GITHUB_USER:=jackwasey}"
+: "${GITHUB_REPO:=icd}"
+: "${GIT_BRANCH:=master}"
+: "${R_CMD:=R}"
 
 cd /tmp
-git clone -b $GIT_BRANCH $GIT_URL/$GITHUB_USER/$GITHUB_REPO.git
+git clone -b "$GIT_BRANCH" "$GIT_URL/$GITHUB_USER/$GITHUB_REPO.git"
 
 # actually, we need to build based on the directory name, not the package name:
-$R_CMD CMD build $GITHUB_REPO # --no-build-vignettes (without build, errors more visible at install step)
-R_PKG_TAR_GZ=`ls -t $R_PKG_NAME*tar.gz | tail -1`
-$R_CMD CMD INSTALL $R_PKG_TAR_GZ
-$R_CMD CMD check --as-cran $R_PKG_TAR_GZ
+$R_CMD CMD build "$GITHUB_REPO" # --no-build-vignettes (without build, errors more visible at install step)
+R_PKG_TAR_GZ=$(ls -t "$R_PKG_NAME"*tar.gz | tail -1)
+$R_CMD CMD INSTALL "$R_PKG_TAR_GZ"
+$R_CMD CMD check --as-cran "$R_PKG_TAR_GZ"
 # potentially just do testthat tests and run examples instead of full package check?
 

@@ -16,5 +16,5 @@ scan-build -analyze-headers \
 		-O0 \
 		-fstack-protector-strong -Wall \
 		-D_FORTIFY_SOURCE=2 
-		-c *.cpp *.h *.c
+		-c ./*.cpp ./*.h ./*.c
 
