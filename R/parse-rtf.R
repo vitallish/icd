@@ -387,7 +387,7 @@ fix_unicode <- function(filtered) {
   filtered <- gsub("\\\\'e8", "\u00e8", filtered) # e gravel
   filtered <- gsub("\\\\'e9", "\u00e9", filtered) # e acute
   filtered <- gsub("\\\\'f1", "\u00f1", filtered) # n tilde
-  filtered <- gsub("\\\\'f16", "\u00f6", filtered) # o umlaut
+  filtered <- gsub("\\\\'f6", "\u00f6", filtered) # o umlaut
   filtered
 }
 
