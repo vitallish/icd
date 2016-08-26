@@ -65,11 +65,13 @@ icd_children.character <- function(x, ...) {
 #' @describeIn icd_children Get children of ICD-9 codes
 #' @export
 icd_children.icd9 <- function(x, short_code = icd_guess_short(x),
-                              defined = TRUE, billable = FALSE, ...) {
-  assert(checkFactor(x), checkCharacter(x))
-  assert_flag(short_code)
-  assert_flag(defined)
-  assert_flag(billable)
+                              defined = TRUE, billable = FALSE, assert = FALSE, ...) {
+  if (assert) {
+    assert(checkFactor(x), checkCharacter(x))
+    assert_flag(short_code)
+    assert_flag(defined)
+    assert_flag(billable)
+  }
 
   if (short_code)
     res <- .Call("icd_icd9ChildrenShortCpp", PACKAGE = "icd", toupper(x), defined)

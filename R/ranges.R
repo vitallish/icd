@@ -203,8 +203,8 @@ expand_range_worker <- function(start, end, lookup, defined,
   assert_flag(ex_ambig_start)
   assert_flag(ex_ambig_end)
 
-  start_index <- match(start, lookup)
-  end_index <- match(end, lookup)
+  start_index <- chmatch(start, lookup)
+  end_index <- chmatch(end, lookup)
   assert_integer(start_index, len = 1L)
   if (is.na(start_index[1]))
     stop(sprintf("start value '%s' not found in look-up table of ICD-9 codes.", start))
@@ -236,7 +236,7 @@ expand_range_worker <- function(start, end, lookup, defined,
     # kill it, if it spills over.
     out_cp <- out
     for (o in out_cp) {
-      if (any(icd_children.icd9(o, short_code = TRUE, defined = defined) %nin% out))
+      if (!all(icd_children.icd9(o, short_code = TRUE, defined = defined) %chin% out))
         out <- out[-which(out == o)]
     }
   }

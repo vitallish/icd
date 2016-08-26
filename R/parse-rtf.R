@@ -117,13 +117,13 @@ parse_rtf_lines <- function(rtf_lines, verbose = FALSE, save_extras = FALSE) {
 
   filtered <- grep("^\\\\par", filtered, value = TRUE)
 
-  filtered <- fix_unicode(filtered)
-
   # drop stupid long line at end:
   longest_lines <- nchar(filtered) > 3000L
   # if none, then -c() returns no rows, so we have to test first
   if (any(longest_lines))
     filtered <- filtered[-c(which(longest_lines))]
+
+  filtered <- fix_unicode(filtered)
 
   filtered <- rtf_strip(filtered)
 
@@ -344,28 +344,7 @@ parse_rtf_lines <- function(rtf_lines, verbose = FALSE, save_extras = FALSE) {
   }
   out <- append(out, out_fourth)
 
-  out_fifth <- c()
-  # apply fifth digit qualifiers:
-  for (f_num in seq_along(lookup_fifth)) {
-    if (verbose)
-      message("applying fifth digits to lookup row: ", f_num)
-    lf <- lookup_fifth[f_num]
-    f <- names(lf)
-    parent_code <- substr(f, 0, nchar(f) - 1)
-
-    if (parent_code %in% names(out)) {
-      # add just the suffix with name being the five digit code
-      pair_fifth <- paste(out[parent_code], lf, sep = ", ")
-      names(pair_fifth) <- f
-      out_fifth <- append(out_fifth, pair_fifth)
-    } else {
-      # this is really superfluous since we don't expect to match these, keep
-      # for debugging
-      if (FALSE)
-        message("parent code ", parent_code, " missing when looking up ", f)
-    }
-  }
-  out <- append(out, out_fifth)
+  out <- append(out, rtf_fifth_digit(out, lookup_fifth))
 
   out <- fix_rtf_duplicates(out, verbose)
 
@@ -376,6 +355,31 @@ parse_rtf_lines <- function(rtf_lines, verbose = FALSE, save_extras = FALSE) {
   fix_rtf_quirks_2015(out)
 }
 
+#' add descriptions and codes with fifth digit
+#'
+#' Use data table to has lookup in existing codes
+#' @import data.table
+#' @keywords internal
+rtf_fifth_digit <- function(out, lookup_fifth) {
+
+  # make data table to index the 'out' names (i.e. the numbers)
+  out_names <- data.table(desc = out, code = names(out), key = "code")
+
+  out_fifth <- c()
+  for (f_num in seq_along(lookup_fifth)) {
+    lf <- lookup_fifth[f_num]
+    f <- names(lf)
+    parent_code <- substr(f, 0, nchar(f) - 1)
+    work_desc <- out_names[code == parent_code, desc, mult = "first"]
+    if (length(work_desc) > 0L) {
+      pair_fifth <- paste(work_desc, lf, sep = ", ")
+      names(pair_fifth) <- f
+      out_fifth <- append(out_fifth, pair_fifth)
+    }
+  }
+  out_fifth
+}
+
 #' Fix unicode characters in RTF
 #'
 #' fix ASCII/CP1252/Unicode horror: of course, some char defs are split over
@@ -383,11 +387,8 @@ parse_rtf_lines <- function(rtf_lines, verbose = FALSE, save_extras = FALSE) {
 #' @keywords internal
 fix_unicode <- function(filtered) {
   #
-  filtered <- gsub("\\\\'e7", "\u00e7", filtered) # c cedila
-  filtered <- gsub("\\\\'e8", "\u00e8", filtered) # e gravel
-  filtered <- gsub("\\\\'e9", "\u00e9", filtered) # e acute
-  filtered <- gsub("\\\\'f1", "\u00f1", filtered) # n tilde
-  filtered <- gsub("\\\\'f6", "\u00f6", filtered) # o umlaut
+  filtered <- gsub("\\\\'e(7|8|9)", "\u00e\\1", filtered) # c cedila
+  filtered <- gsub("\\\\'f(1|6)", "\u00f\\1", filtered) # n tilde
   filtered
 }
 
@@ -550,8 +551,7 @@ rtf_strip <- function(x) {
   x <- gsub("\\\\tab ", " ", x)
   x <- gsub("\\\\[[:punct:]]", "", x)  # control symbols only, not control words
   x <- gsub("\\\\lsdlocked[ [:alnum:]]*;", "", x)  # special case, still needed?
-  x <- gsub("\\{\\\\bkmkstart.*?\\}", "", x)
-  x <- gsub("\\{\\\\bkmkend.*?\\}", "", x)
+  x <- gsub("\\{\\\\bkmk(start|end).*?\\}", "", x)
   # no backslash in this next list, others removed from
   # http://www.regular-expressions.info/posixbrackets.html
   x <- gsub("\\\\[-[:alnum:]]*[ !\"#$%&'()*+,-./:;<=>?@^_`{|}~]?", "", x)

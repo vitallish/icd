@@ -63,6 +63,11 @@ as_char_no_warn <- function(x) {
     as.character(x)
 }
 
+#' not in
+#'
+#' if using data.table, %chin% is optimized, but not hashed for character
+#' vectors.
+#' @keywords internal
 "%nin%" <- function(x, table) {
   match(x, table, nomatch = 0) == 0
 }
