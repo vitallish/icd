@@ -5,6 +5,8 @@
 \alias{icd9_map_single_ccs}
 \alias{icd9_map_multi_ccs}
 \alias{icd10_map_ccs}
+\alias{icd9_map_multi_ccs_pr}
+\alias{icd10_map_ccs_pr}
 \title{Clinical Classifactions Software (CCS) for ICD9/10-CM}
 \format{list of character vectors, each numbered by co-morbidity}
 \description{

@@ -258,7 +258,7 @@ NULL
 #' @keywords datasets
 #' @format list of character vectors, each numbered by co-morbidity
 #' @name icd9_map_single_ccs
-#' @aliases icd9_map_multi_ccs icd10_map_ccs
+#' @aliases icd9_map_multi_ccs icd10_map_ccs icd9_map_multi_ccs_pr icd10_map_ccs_pr
 NULL
 
 #' Comorbidity names

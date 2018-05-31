@@ -4,7 +4,7 @@
 \alias{icd10_parse_ahrq_ccs}
 \title{parse AHRQ CCS for mapping - ICD10}
 \usage{
-icd10_parse_ahrq_ccs(version = "2018.1", save_data = FALSE,
+icd10_parse_ahrq_ccs(version = "2018.1", dx = TRUE, save_data = FALSE,
   offline = TRUE)
 }
 \arguments{

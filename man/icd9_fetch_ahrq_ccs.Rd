@@ -4,11 +4,13 @@
 \alias{icd9_fetch_ahrq_ccs}
 \title{Download ahrq-ccs-icd9 definition}
 \usage{
-icd9_fetch_ahrq_ccs(single = TRUE, offline)
+icd9_fetch_ahrq_ccs(single = TRUE, dx = TRUE, offline)
 }
 \arguments{
 \item{single}{a logical value, if \code{TRUE} then use single level CCS,
 otherwise use multi level}
+
+\item{dx}{if TRUE download diagnosis CSS, otherise download procedure codes}
 
 \item{offline}{single logical, if \code{TRUE} then don't pull the file from
 internet, only return path and file name if the file already exists in the

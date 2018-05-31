@@ -21,33 +21,61 @@
 #' @template ccs-single
 #' @template offline
 #' @keywords internal
-icd9_fetch_ahrq_ccs <- function(single = TRUE, offline) {
+#' @param dx if TRUE download diagnosis CSS, otherise download procedure codes
+icd9_fetch_ahrq_ccs <- function(single = TRUE,
+                                dx = TRUE,
+                                offline) {
   assert_flag(single)
+  assert_flag(dx)
   assert_flag(offline)
-  if (single)
-    unzip_to_data_raw(
-      url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Single_Level_CCS_2015.zip",
-      file_name = "$dxref 2015.csv",
-      offline = offline)
-  else
-    unzip_to_data_raw(
-      url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Multi_Level_CCS_2015.zip",
-      file_name = "ccs_multi_dx_tool_2015.csv",
-      offline = offline)
+  if (single) {
+    if (dx)
+      unzip_to_data_raw(url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Single_Level_CCS_2015.zip",
+                        file_name = "$dxref 2015.csv",
+                        offline = offline)
+    else
+      unzip_to_data_raw(url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Single_Level_CCS_2015.zip",
+                        file_name = "$prref 2015.csv",
+                        offline = offline)
+  }
+
+  else{
+    if (dx)
+      unzip_to_data_raw(url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Multi_Level_CCS_2015.zip",
+                        file_name = "ccs_multi_dx_tool_2015.csv",
+                        offline = offline)
+    else
+      unzip_to_data_raw(url = "https://www.hcup-us.ahrq.gov/toolssoftware/ccs/Multi_Level_CCS_2015.zip",
+                        file_name = "ccs_multi_pr_tool_2015.csv",
+                        offline = offline)
+
+  }
 }
 
 #' Download ahrq-css-icd10 definition
 #' @template offline
 #' @keywords internal
-icd10_fetch_ahrq_ccs <- function(version = "2018.1", offline) {
+#' @param dx if TRUE download diagnosis CSS, otherise download procedure codes
+icd10_fetch_ahrq_ccs <- function(version = "2018.1",
+                                 dx = TRUE,
+                                 offline) {
   assert_character(version, pattern = "^20[0-9]{2}\\.[1-9]$")
   assert_flag(offline)
+  assert_flag(dx)
+
   version <- gsub(".", "_", version, fixed = TRUE)
   # all information in one file, no need for single vs multi
-  unzip_to_data_raw(
-    url = paste0("https://www.hcup-us.ahrq.gov/toolssoftware/ccs10/ccs_dx_icd10cm_", version, ".zip"),
-    file_name = paste0("ccs_dx_icd10cm_", version, ".csv"),
-    offline = offline)
+  if(dx)
+    unzip_to_data_raw(
+      url = paste0("https://www.hcup-us.ahrq.gov/toolssoftware/ccs10/ccs_dx_icd10cm_", version, ".zip"),
+      file_name = paste0("ccs_dx_icd10cm_", version, ".csv"),
+      offline = offline)
+  else
+    unzip_to_data_raw(
+      url = paste0("https://www.hcup-us.ahrq.gov/toolssoftware/ccs10/ccs_pr_icd10pcs_", version, ".zip"),
+      file_name = paste0("ccs_pr_icd10pcs_", version, ".csv"),
+      offline = offline)
+
 }
 
 #' parse AHRQ CCS for mapping
@@ -69,12 +97,13 @@ icd10_fetch_ahrq_ccs <- function(version = "2018.1", offline) {
 #'   icd:::icd9_parse_ahrq_ccs(single = FALSE, save_data = FALSE, offline = TRUE)
 #' }
 #' @keywords internal manip
-icd9_parse_ahrq_ccs <- function(single = TRUE, save_data = FALSE, offline = TRUE) {
+icd9_parse_ahrq_ccs <- function(single = TRUE, dx = TRUE, save_data = FALSE, offline = TRUE) {
   assert_flag(single)
+  assert_flag(dx)
   assert_flag(save_data)
   assert_flag(offline)
 
-  ahrq_ccs <- icd9_fetch_ahrq_ccs(single = single, offline = offline)
+  ahrq_ccs <- icd9_fetch_ahrq_ccs(single = single, dx = dx, offline = offline)
 
   clean_icd9 <- function(x){
     x %>%
@@ -119,25 +148,41 @@ icd9_parse_ahrq_ccs <- function(single = TRUE, save_data = FALSE, offline = TRUE
     lvl3 <- tapply(ahrq_df[["ICD.9.CM.CODE"]], ahrq_df[["CCS.LVL.3"]], clean_icd9) %>%
       resort_lvls %>%
       comorbidity_map
-
-    lvl4 <- tapply(ahrq_df[["ICD.9.CM.CODE"]], ahrq_df[["CCS.LVL.4"]], clean_icd9) %>%
-      resort_lvls %>%
-      comorbidity_map
+    if(dx)
+      lvl4 <- tapply(ahrq_df[["ICD.9.CM.CODE"]], ahrq_df[["CCS.LVL.4"]], clean_icd9) %>%
+        resort_lvls %>%
+        comorbidity_map
+    else
+      lvl4 <- NULL
 
     icd9_map_multi_ccs <- list(lvl1 = lvl1, lvl2 = lvl2, lvl3 = lvl3, lvl4 = lvl4)
 
+    icd9_map_multi_ccs[sapply(icd9_map_multi_ccs, is.null)] <- NULL
+
     if (save_data)
-      save_in_data_dir("icd9_map_multi_ccs")
+      if(dx)
+        save_in_data_dir("icd9_map_multi_ccs")
+      else{
+        icd9_map_multi_ccs_pr <- icd9_map_multi_ccs
+        save_in_data_dir("icd9_map_multi_ccs_pr")
+      }
     out <- icd9_map_multi_ccs
+
   } else {
     ahrq_df <- read.csv(ahrq_ccs$file_path, quote = "'\"", colClasses = "character", skip = 1)
     icd9_map_single_ccs <-
       tapply(ahrq_df[["ICD.9.CM.CODE"]], trimws(ahrq_df$CCS.CATEGORY), clean_icd9) %>%
       resort_lvls %>%
       comorbidity_map
+    # if(!dx) icd9_map_single_ccs_pr <- icd9_map_single_ccs
 
     if (save_data)
-      save_in_data_dir("icd9_map_single_ccs")
+      if(dx)
+        save_in_data_dir("icd9_map_single_ccs")
+      else{
+        icd9_map_single_ccs_pr <- icd9_map_single_ccs
+        save_in_data_dir("icd9_map_single_ccs_pr")
+      }
     out <- icd9_map_single_ccs
 
   }
@@ -166,13 +211,15 @@ icd9_parse_ahrq_ccs <- function(single = TRUE, save_data = FALSE, offline = TRUE
 #' }
 #' @keywords internal manip
 icd10_parse_ahrq_ccs <- function(version = "2018.1",
+                                 dx = TRUE,
                                  save_data = FALSE,
                                  offline = TRUE) {
   assert_character(version, pattern = "^20[0-9]{2}\\.[1-9]$")
+  assert_flag(dx)
   assert_flag(save_data)
   assert_flag(offline)
   ahrq_ccs <-
-    icd10_fetch_ahrq_ccs(version = version, offline = offline)
+    icd10_fetch_ahrq_ccs(version = version, dx = dx, offline = offline)
   # simpler structure than icd9, all categories in one file
   ahrq_df <- read.csv(ahrq_ccs$file_path,
                       quote = "'\"",
@@ -212,7 +259,9 @@ icd10_parse_ahrq_ccs <- function(version = "2018.1",
   }
 
   ccs_lvl_map <- function(col_name) {
-    tapply(ahrq_df[["ICD.10.CM.CODE"]], ahrq_df[[col_name]], clean_icd10) %>%
+    code_col <- ifelse(dx,"ICD.10.CM.CODE","ICD.10.PCS.CODE")
+
+    tapply(ahrq_df[[code_col]], ahrq_df[[col_name]], clean_icd10) %>%
       resort_lvls %>%
       comorbidity_map
   }
@@ -224,7 +273,12 @@ icd10_parse_ahrq_ccs <- function(version = "2018.1",
   # Because data is in one file, only have one mapping file to save
   icd10_map_ccs <- lapply(icd10_map_def, ccs_lvl_map)
   if (save_data)
-    save_in_data_dir("icd10_map_ccs")
+    if(dx){
+      save_in_data_dir("icd10_map_ccs")
+    }else{
+      icd10_map_ccs_pr <- icd10_map_ccs
+      save_in_data_dir("icd10_map_ccs_pr")
+    }
   invisible(icd10_map_ccs)
 }
 
